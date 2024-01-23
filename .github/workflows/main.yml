@@ -36,4 +36,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NOME }}
           publish-profile: ${{ SECRETS.AZURE_PUBLISH_PERFIL }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}"
