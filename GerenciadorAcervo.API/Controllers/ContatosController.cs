@@ -31,7 +31,7 @@ namespace GerenciadorAcervo.API.Controllers
             => JsonResponse(_contatosService.CadastrarContato(request));
 
         /// <summary>
-        /// Permite atualizar contatos, pessoas conhecidas para quais será possível registrar que determinado item de acervo foi emprestado.
+        /// Permite atualizar contatos, pessoas conhecidas para quais será possível registrar que determinado item de acervo foi emprestado
         /// </summary>
         [HttpPut]
         [Route("atualizar")]
