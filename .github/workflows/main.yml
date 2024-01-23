@@ -19,13 +19,13 @@ jobs:
           dotnet-version: '7.0.x'
 
       - name: Restauração de pacotes do projeto
-      - run: dotnet restore ./GerenciadorAcervo.sln
+        run: dotnet restore ./GerenciadorAcervo.sln
 
       - name: Build
-      - run: dotnet build ./GerenciadorAcervo.sln --configuration Release --no-restore
+        run: dotnet build ./GerenciadorAcervo.sln --configuration Release --no-restore
 
       - name: Publish
-      - run: dotnet publish ./GerenciadorAcervo.sln --configuration Release --no-build
+        run: dotnet publish ./GerenciadorAcervo.sln --configuration Release --no-build
       
 
       
