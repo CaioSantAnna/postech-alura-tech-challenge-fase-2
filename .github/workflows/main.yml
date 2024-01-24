@@ -7,7 +7,7 @@ on:
     - master
 
 env:
-  AZURE_WEBAPP_NOME: postech-alura-tech-challenge-fase-2
+  AZURE_WEBAPP_NOME: postech-alura-tech-challenge-2
   AZURE_WEBAPP_PACKAGE_CAMINHO: "."
 
 jobs:
