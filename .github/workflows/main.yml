@@ -8,7 +8,7 @@ on:
 
 env:
   AZURE_WEBAPP_NOME: postech-alura-tech-challenge-fase-2
-  AZURE_WEBAPP_PACKAGE_CAMINHO: "./publish"
+  AZURE_WEBAPP_PACKAGE_CAMINHO: "."
 
 jobs:
   publish:
@@ -29,11 +29,11 @@ jobs:
         run: dotnet build ./GerenciadorAcervo.sln -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./GerenciadorAcervo.API/GerenciadorAcervo.API.csproj -c Release --no-build -o '${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}'
+        run: dotnet publish ./GerenciadorAcervo.API/GerenciadorAcervo.API.csproj -c Release -o ../publish --no-build 
       
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NOME }}
           publish-profile: ${{ SECRETS.AZURE_PUBLISH_PERFIL }}
-          package: "${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}"
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}/publish'
