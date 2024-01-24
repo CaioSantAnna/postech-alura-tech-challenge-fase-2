@@ -8,10 +8,10 @@ on:
 
 env:
   AZURE_WEBAPP_NOME: postech-alura-tech-challenge-fase-2
-  AZURE_WEBAPP_PACKAGE_CAMINHO: "./publish"
+  AZURE_WEBAPP_PACKAGE_CAMINHO: "."
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,11 +29,30 @@ jobs:
         run: dotnet build ./GerenciadorAcervo.sln -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./GerenciadorAcervo.API/GerenciadorAcervo.API.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}' --no-build 
-      
+        run: dotnet publish ./GerenciadorAcervo.API/GerenciadorAcervo.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/publish --no-build 
+
+      - name: Upload do resultado do processo de build
+        uses: actions/upload-artifact@v3
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/publish
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download do resultado do processo de build anterior
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+  
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NOME }}
           publish-profile: ${{ SECRETS.AZURE_PUBLISH_PERFIL }}
-          package: "${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}"
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_CAMINHO }}
